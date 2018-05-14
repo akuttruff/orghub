@@ -1,22 +1,18 @@
 (ns orghub.core
-    (:require [rum.core :as rum]))
+  (:require [rum.core :as rum]
+            [orghub.login :as login]
+            [orghub.navigation :as navigation]
+            [garden.core :refer [css]]))
 
+;; TODO: comment out for prod
 (enable-console-print!)
 
-(println "This text is printed from src/orghub/core.cljs. Go ahead and edit it and see reloading in action.")
+(let [components [["navigation" navigation/navigation]
+                  ["login" login/login]]]
 
-;; define your app data so that it doesn't get over-written on reload
-
-(defonce app-state (atom {:text "Hello world!"}))
-
-
-(rum/defc hello-world []
-  [:div
-   [:h1 (:text @app-state)]
-   [:h3 "Edit this and watch it change!"]])
-
-(rum/mount (hello-world)
-           (. js/document (getElementById "app")))
+  (doseq [[name func] components]
+    (rum/mount (func)
+               (. js/document (getElementById name)))))
 
 (defn on-js-reload []
   ;; optionally touch your app-state to force rerendering depending on

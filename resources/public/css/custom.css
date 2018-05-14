@@ -1,0 +1,11 @@
+.flash-message-success {
+    display: block;
+    color: #267326;
+    font-size: .875em;
+}
+
+.flash-message-fail {
+    display: block;
+    color: #b30000;
+    font-size: .875em;
+}
