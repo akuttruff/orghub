@@ -26,5 +26,7 @@
      [:a.pure-menu-heading {:href "/"}
       OrgHub]
      [:ul.pure-menu-list
+      (pure-link "home")
       (pure-link "groups")
+      (pure-link "contacts")
       ]]]])
