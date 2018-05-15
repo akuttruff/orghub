@@ -3,8 +3,7 @@
 
 (enable-console-print!)
 
-(defonce login-state (atom {:email ""
-                            :password ""}))
+(defonce ccount (atom 0))
 
 (rum/defc input [name]
   (let [type (or (#{"email" "password"} name) "text")
@@ -12,6 +11,10 @@
     [:fieldset.pure-group
      [:input.pure-input-1.pure-input-rounded
       {:type type :placeholder placeholder}]]))
+
+(rum/defc counter < rum/reactive []
+  [:div { :on-click (fn [_] (swap! ccount inc))}
+   "Clicks: " (rum/react ccount)])
 
 (rum/defc login []
   [:form.pure-form

@@ -9,19 +9,24 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]
+                 [compojure "1.6.1"]
                  [rum "0.11.2"]
                  [ring/ring-core "1.6.3"]
-                 [ring/ring-defaults "0.3.1"]
                  [ring/ring-json "0.4.0"]
-                 [compojure "1.6.1"]]
+                 ;; [ring/ring-defaults "0.3.1"]
+                 [cheshire "5.8.0"]]
 
-  :plugins [[lein-figwheel "0.5.16"]
+  :plugins [[clj-sql-up "0.4.1"]
+            [lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-ring "0.12.4"]]
+
+  :clj-sql-up {:database "jdbc:postgresql://slackz@127.0.0.1:5432/orghub"
+               :deps [[org.postgresql/postgresql "42.2.2"]]}
+
   :ring {:handler orghub.server/app}
 
   :source-paths ["src"]
-
   :cljsbuild {:builds
               [{:id "dev"
                 :source-paths ["src"]

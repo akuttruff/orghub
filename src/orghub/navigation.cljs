@@ -24,9 +24,7 @@
    [:div#menu
     [:div.pure-menu
      [:a.pure-menu-heading {:href "/"}
-      OrgHub]
+      "OrgHub"]
      [:ul.pure-menu-list
-      (pure-link "home")
       (pure-link "groups")
-      (pure-link "contacts")
-      ]]]])
+      (pure-link "contacts")]]]])
