@@ -10,7 +10,7 @@
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]
                  [compojure "1.6.1"]
-                 [rum "0.11.2"]
+                 [reagent "0.8.1"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-json "0.4.0"]
                  ;; [ring/ring-defaults "0.3.1"]

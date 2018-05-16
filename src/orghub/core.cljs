@@ -1,21 +1,13 @@
 (ns orghub.core
-  (:require [rum.core :as rum]
+  (:require [reagent.core :as r]
             [orghub.login :as login]
-            [orghub.navigation :as navigation]))
-
-;; TODO: comment out for prod
-(enable-console-print!)
-
-(let [components [["navigation" navigation/navigation]
-                  ["login" login/login]]]
-
-  (doseq [[name func] components]
-    (rum/mount (func)
-               (. js/document (getElementById name)))))
+            [orghub.navigation :as nav]))
 
 
-(defn on-js-reload []
-  ;; optionally touch your app-state to force rerendering depending on
-  ;; your application
-  ;; (swap! app-state update-in [:__figwheel_counter] inc)
-)
+(defn mountit []
+  (r/render [login/form]
+            (. js/document (getElementById "login")))
+  (r/render [nav/navigation]
+            (. js/document (getElementById "navigation"))))
+
+(mountit)

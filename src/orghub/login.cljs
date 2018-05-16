@@ -1,26 +1,26 @@
 (ns orghub.login
-  (:require [rum.core :as rum]))
+  (:require [reagent.core :as r]))
 
 (enable-console-print!)
 
-(defonce ccount (atom 0))
+(defonce login-info (r/atom {:email "" :password ""}))
 
-(rum/defc input [name]
+(defn input [name val]
   (let [type (or (#{"email" "password"} name) "text")
         placeholder (clojure.string/capitalize name)]
     [:fieldset.pure-group
      [:input.pure-input-1.pure-input-rounded
-      {:type type :placeholder placeholder}]]))
+      {:type type
+       :placeholder placeholder
+       :value @val
+       :on-change #(reset! val (-> % .-target .-value))}]]))
 
-(rum/defc counter < rum/reactive []
-  [:div { :on-click (fn [_] (swap! ccount inc))}
-   "Clicks: " (rum/react ccount)])
-
-(rum/defc login []
-  [:form.pure-form
-   (input "email")
-   (input "password")
-   [:button.pure-button.pure-input-1.pure-button-primary
-    "Log In"]])
-
-
+(defn form []
+  (let [email (r/atom "")
+        password (r/atom "")]
+    [:form.pure-form
+     [input "email" email]
+     [input "password" password]
+     [:button.pure-button.pure-input-1.pure-button-primary
+      {:on-click #(prn @email)}
+      "Log In"]]))
