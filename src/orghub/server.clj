@@ -1,14 +1,24 @@
 (ns orghub.server
-  (:require [cheshire.core :refer [generate-string]]
-            [compojure.core :refer [GET defroutes]]
+  (:require [cheshire.core :refer [generate-string parse-string]]
+            [compojure.core :refer [GET POST defroutes]]
             [compojure.route :as route]
-            [ring.util.response :refer [response]]
-            [ring.middleware.json :refer [wrap-json-response]]))
+            [ring.util.response :refer [response]]))
 
+(defn json-resp [data]
+  (content-type (response (generate-string data))
+                "application/json"))
 
-(defroutes app-routes
-  (GET "/" [] (response {:foo "bar"}))
+(defn json-body [req]
+  (parse-string (slurp (:body req)) true))
+
+(defn login [login-info]
+  (println (:email login-info))
+  (println (:password login-info)))
+
+(defroutes app
+  (GET "/" [] (json-resp {:foo "bars"}))
+  (POST "/login" request
+        (login (json-body request)))
   (route/not-found "<h1>Page not found</h1>"))
 
-(def app (-> app-routes
-             (wrap-json-response)))
+
