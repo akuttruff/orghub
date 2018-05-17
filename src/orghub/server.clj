@@ -2,7 +2,8 @@
   (:require [cheshire.core :refer [generate-string parse-string]]
             [compojure.core :refer [GET POST defroutes]]
             [compojure.route :as route]
-            [ring.util.response :refer [response]]))
+            [ring.middleware.cors :refer [wrap-cors]]
+            [ring.util.response :refer [response content-type]]))
 
 (defn json-resp [data]
   (content-type (response (generate-string data))
@@ -17,8 +18,16 @@
 
 (defroutes app
   (GET "/" [] (json-resp {:foo "bars"}))
-  (POST "/login" request
-        (login (json-body request)))
+  (POST "/login" {body :body}
+        (let [login-info (parse-string (slurp body)) ]
+
+          (println (login-info "email"))
+          (println (login-info "password"))
+          )
+
+       ;;(login (json-body request))
+       )
   (route/not-found "<h1>Page not found</h1>"))
+
 
 

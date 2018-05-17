@@ -11,6 +11,7 @@
                  [org.clojure/core.async  "0.4.474"]
                  [buddy/buddy-hashers "1.3.0"]
                  [cheshire "5.8.0"]
+                 [cljs-http "0.1.45"]
                  [compojure "1.6.1"]
                  [reagent "0.8.1"]
                  [ring/ring-core "1.6.3"]
