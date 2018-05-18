@@ -18,16 +18,7 @@
 
 (defroutes app
   (GET "/" [] (json-resp {:foo "bars"}))
-  (POST "/login" {body :body}
-        (let [login-info (parse-string (slurp body)) ]
-
-          (println (login-info "email"))
-          (println (login-info "password"))
-          )
-
-       ;;(login (json-body request))
-       )
+  (POST "/login" req
+        (let [login-info (json-body req)]
+          (login (json-body req))))
   (route/not-found "<h1>Page not found</h1>"))
-
-
-

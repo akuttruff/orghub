@@ -10,12 +10,15 @@
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]
                  [buddy/buddy-hashers "1.3.0"]
+                 [ring/ring-core "1.6.3"]
+                 [ring/ring-json "0.4.0"]
+                 ;; cljs dependencies
                  [cheshire "5.8.0"]
                  [cljs-http "0.1.45"]
                  [compojure "1.6.1"]
                  [reagent "0.8.1"]
-                 [ring/ring-core "1.6.3"]
-                 [ring/ring-json "0.4.0"]]
+                 [reagent-utils "0.3.1"]
+                 [secretary "1.2.3"]]
 
   :plugins [[clj-sql-up "0.4.1"]
             [lein-figwheel "0.5.16"]

@@ -14,9 +14,7 @@
                                                    :password pw}}))]
         (prn response)
         (prn (:status response))
-        (prn (map :login (:body response)))))
-
-  )
+        (prn (map :login (:body response))))))
 
 
 (defn input [name val]
