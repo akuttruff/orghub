@@ -35,6 +35,6 @@
 
 (def app (-> app-routes
              (wrap-cors  :access-control-allow-origin [#"^(http(s)?://)?localhost:(\d){4}$"]
-                         :access-control-allow-credentials true
+                         :access-control-allow-credentials "true"
                          :access-control-allow-methods [:get :post :options]
                          :access-control-allow-headers ["Content-Type" "Accept" "Cache-Control" "Origin" "User-Agent"])))
