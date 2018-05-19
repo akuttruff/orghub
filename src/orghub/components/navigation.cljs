@@ -1,10 +1,10 @@
-(ns orghub.navigation
+(ns orghub.components.navigation
   (:require [reagent.core :as r]
             [reagent.session :as session]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
             [secretary.core :as secretary :refer-macros [defroute]]
-            [orghub.login :as login])
+            [orghub.components.login :as login])
   (:import goog.history.Html5History
            goog.Uri))
 
@@ -48,7 +48,6 @@
 (defn app-routes []
   (secretary/set-config! :prefix "#")
 
-  
   (defroute "/" []
     (swap! app-state assoc :page :home))
 
@@ -58,8 +57,8 @@
   (hook-browser-navigation!))
 
 
-
 (defmulti current-page #(@app-state :page))
+
 (defmethod current-page :home []
   [home])
 (defmethod current-page :groups []
