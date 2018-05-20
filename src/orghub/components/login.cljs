@@ -9,17 +9,9 @@
 (defonce login-info (r/atom {:email "" :password ""}))
 
 (defn login [email pw]
-  (prn "LOGGIN IN")
-  (prn email)
-  (prn pw)
-
-  (go (let [response (<! (http/post "http://localhost:3000/login"
-                                    {:json-params {:email email :password pw}
-       
-                                     }))]
-        (prn response)
-        (prn (:status response))
-        (prn (map :login (:body response))))))
+  (go (let [resp (<! (http/post "/login"
+                                {:json-params {:email email :password pw}}))]
+        (prn resp))))
 
 
 (defn input [name val]

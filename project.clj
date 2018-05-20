@@ -28,8 +28,6 @@
   :clj-sql-up {:database "jdbc:postgresql://slackz@127.0.0.1:5432/orghub"
                :deps [[org.postgresql/postgresql "42.2.2"]]}
 
-  :ring {:handler orghub.server/app}
-
   :source-paths ["src"]
   :cljsbuild {:builds
               [{:id "dev"
@@ -39,11 +37,7 @@
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
                 :figwheel {:on-jsload "orghub.core/on-js-reload"
-                           ;; :open-urls will pop open your application
-                           ;; in the default browser once Figwheel has
-                           ;; started and compiled your application.
-                           ;; Comment this out once it no longer serves you.
-                           :open-urls ["http://localhost:3449/index.html"]}
+                           :open-urls ["http://localhost:3449"]}
 
                 :compiler {:main orghub.core
                            :asset-path "js/compiled/out"
@@ -64,43 +58,15 @@
                            :pretty-print false}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
-             ;; :server-port 3449 ;; default
-             ;; :server-ip "127.0.0.1"
-
              :css-dirs ["resources/public/css"] ;; watch and update CSS
 
-             ;; Start an nREPL server into the running figwheel process
-             ;; :nrepl-port 7888
+             :ring-handler orghub.server/app
+             :server-port 3449
 
-             ;; Server Ring Handler (optional)
-             ;; if you want to embed a ring handler into the figwheel http-kit
-             ;; server, this is for simple ring servers, if this
-
-             ;; doesn't work for you just run your own server :) (see lein-ring)
-
-             ;; :ring-handler hello_world.server/handler
-
-             ;; To be able to open files in your editor from the heads up display
-             ;; you will need to put a script on your path.
-             ;; that script will have to take a file path and a line number
-             ;; ie. in  ~/bin/myfile-opener
-             ;; #! /bin/sh
-             ;; emacsclient -n +$2 $1
-             ;;
-             ;; :open-file-command "myfile-opener"
-
-             ;; if you are using emacsclient you can just use
-             ;; :open-file-command "emacsclient"
-
-             ;; if you want to disable the REPL
-             ;; :repl false
-
+             ;; :repl false ;; to disable REPL
              ;; to configure a different figwheel logfile path
              ;; :server-logfile "tmp/logs/figwheel-logfile.log"
-
-             ;; to pipe all the output to the repl
-             ;; :server-logfile false
-             }
+             :server-logfile false}
 
 
   ;; Setting up nREPL for Figwheel and ClojureScript dev
