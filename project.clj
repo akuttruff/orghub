@@ -13,13 +13,15 @@
                  [org.clojure/java.jdbc "0.7.6"]
                  [org.postgresql/postgresql "42.2.2"]
                  ;; ring / compojure / support libs
+                 [ring "1.6.3"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-json "0.4.0"]
+                 [ring/ring-jetty-adapter "1.6.3"]
+                 [compojure "1.6.1"]
                  [buddy/buddy-hashers "1.3.0"]
                  ;; cljs dependencies
                  [cheshire "5.8.0"]
                  [cljs-http "0.1.45"]
-                 [compojure "1.6.1"]
                  [reagent "0.8.1"]
                  [reagent-utils "0.3.1"]
                  [secretary "1.2.3"]]
@@ -31,7 +33,8 @@
 
   :clj-sql-up {:database "jdbc:postgresql://orghub:orghub@127.0.0.1:5432/orghub"
                :deps [[org.postgresql/postgresql "42.2.2"]]}
-  ;; :ring {:handler orghub.server/app}
+  :ring {:handler orghub.server/app}
+  :main orghub.server
 
   :source-paths ["src"]
   :cljsbuild {:builds

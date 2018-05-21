@@ -9,12 +9,14 @@
       created_at timestamp with time zone NOT NULL)"
    "CREATE INDEX users_name_idx ON users(name)"
    "CREATE INDEX users_created_at_idx ON users(created_at)"
+
    ;; groups
    "CREATE TABLE groups(
       name varchar(100) NOT NULL UNIQUE,
       description text,
       created_at timestamp with time zone NOT NULL)"
    "CREATE INDEX groups_created_at_idx ON groups(created_at)"
+
    ;; contacts
    "CREATE TABLE contacts(
       name varchar(100) NOT NULL,
@@ -31,9 +33,7 @@
     (map #(str "DROP TABLE " %) tables)))
 
 
-
 ;; TODO: add join tables when scoping contacts by group
-
 
 ;; create_table :groups_users, id: false do |t|
 ;; t.references :group, index: true, null: false
@@ -43,7 +43,6 @@
 ;; add_index :groups_users, [:group_id, :user_id], unique: true
 ;; add_foreign_key :groups_users, :groups
 ;; add_foreign_key :groups_users, :users
-
 
 ;; create_table :contacts_groups, id: false do |t|
 ;; t.references :group, index: true, null: false

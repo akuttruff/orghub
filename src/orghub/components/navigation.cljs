@@ -57,7 +57,7 @@
   (hook-browser-navigation!))
 
 
-(defmulti current-page #(@app-state :page))
+(defmulti current-page #(:page @app-state))
 
 (defmethod current-page :home []
   [home])

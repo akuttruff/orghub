@@ -1,5 +1,5 @@
 (ns orghub.db
-  (:require [clojure.java.jdbc :as j]))
+  (:require [clojure.java.jdbc :as jdbc]))
 
 ;; TODO: pull from env vars; just for dev
 (def db-spec {:dbtype "postgresql"
@@ -8,7 +8,12 @@
               :user "orghub"
               :password "orghub"})
 
-(defn user-by [col val]
-  (let [sql (str "SELECT * FROM users WHERE " (name col) " = ?")]
-    (j/query db-spec [sql val])))
+(defn all [tbl]
+  (let [sql (str "SELECT * FROM " (name tbl))]
+    (jdbc/query db-spec [sql])))
 
+(defn find-by [tbl col val]
+  (let [sql (str "SELECT * FROM " (name tbl)
+                 " WHERE " (name col) " = ?"
+                 " LIMIT 1")]
+    (first (jdbc/query db-spec [sql val]))))
