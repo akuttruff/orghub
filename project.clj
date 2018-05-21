@@ -28,15 +28,12 @@
 
   :plugins [[clj-sql-up "0.4.1"]
             [lein-figwheel "0.5.16"]
-            [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
+            [lein-cljsbuild "1.1.7"]
             [lein-ring "0.12.4"]]
 
   :clj-sql-up {:database "jdbc:postgresql://orghub:orghub@127.0.0.1:5432/orghub"
                :deps [[org.postgresql/postgresql "42.2.2"]]}
-  :ring {:handler orghub.server/app}
-  :main orghub.server
 
-  :source-paths ["src"]
   :cljsbuild {:builds
               [{:id "dev"
                 :source-paths ["src"]
@@ -49,21 +46,21 @@
 
                 :compiler {:main orghub.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/orghub.js"
+                           :output-to  "resources/public/js/compiled/orghub.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
-                           :preloads [devtools.preload]}}
-               ;; This next build is a compressed minified build for
-               ;; production. You can build this with:
-               ;; lein cljsbuild once min
-               {:id "min"
-                :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/orghub.js"
-                           :main orghub.core
-                           :optimizations :advanced
-                           :pretty-print false}}]}
+                           :preloads [devtools.preload]}}]}
+
+  ;; Ubjerjar / compilation stuff
+  :ring {:handler orghub.server/app}
+  :source-paths ["src"]
+  :hooks [leiningen.cljsbuild]
+  :uberjar-name "orghub.jar"
+  :main orghub.server
+  :aot [orghub.server]
+
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
              :css-dirs ["resources/public/css"] ;; watch and update CSS
@@ -90,4 +87,12 @@
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
                    ;; need to add the compliled assets to the :clean-targets
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
-                                                     :target-path]}})
+                                                     :target-path]}
+
+             :uberjar {:aot :all
+                       :cljsbuild {:builds [{:source-paths ["src"]
+                                             :compiler {:output-to "resources/public/js/compiled/orghub.js"
+                                                        :optimizations :advanced
+                                                        :jar true
+                                                        :main orghub.core
+                                                        :pretty-print false}}]}}})

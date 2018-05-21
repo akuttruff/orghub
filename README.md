@@ -11,8 +11,9 @@ A community organizing tool for managing contacts, sending alerts, publishing ev
 
 ## TODOs
 * finish hooking up authentication
-* wire up IDB in between server api calls and front-end
 * list views for groups, contacts, etc
+* add db encryption for sensitive data
+* wire up IDB in between server api calls and front-end
 * add more items to this list :)
 
 ## License

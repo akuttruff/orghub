@@ -1,4 +1,5 @@
 (ns orghub.server
+  (:gen-class)
   (:require [buddy.hashers :as hashers]
             [cheshire.core :refer [generate-string parse-string]]
             [compojure.core :refer [GET POST defroutes]]
