@@ -42,50 +42,40 @@
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
                 :figwheel {:on-jsload "orghub.core/on-js-reload"
-                           :open-urls ["http://localhost:3449"]}
+                           :open-urls ["http://localhost:3000"]}
 
                 :compiler {:main orghub.core
                            :asset-path "js/compiled/out"
                            :output-to  "resources/public/js/compiled/orghub.js"
                            :output-dir "resources/public/js/compiled/out"
-                           :source-map-timestamp true
-                           ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
-                           ;; https://github.com/binaryage/cljs-devtools
-                           :preloads [devtools.preload]}}]}
+                           :source-map-timestamp true}}]}
 
   ;; Ubjerjar / compilation stuff
-  :ring {:handler orghub.server/app}
+  :ring {:handler orghub.server/app
+         :auto-reload? true
+         :open-browser? false
+         :reload-paths ["src/" "resources/"]}
   :source-paths ["src"]
-  :hooks [leiningen.cljsbuild]
+  :resource-paths ["resources"]
+
   :uberjar-name "orghub.jar"
   :main orghub.server
   :aot [orghub.server]
 
 
-  :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
-             :css-dirs ["resources/public/css"] ;; watch and update CSS
-
+  :figwheel {:css-dirs ["resources/public/css"] ;; watch and update CSS
              :ring-handler orghub.server/app
-             :server-port 3449
-
-             ;; :repl false ;; to disable REPL
-             ;; to configure a different figwheel logfile path
-             ;; :server-logfile "tmp/logs/figwheel-logfile.log"
+             :server-port 3000
+             ;; :server-logfile "tmp/figwheel.log"
              :server-logfile false}
 
-
-  ;; Setting up nREPL for Figwheel and ClojureScript dev
-  ;; Please see:
-  ;; https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
-  :profiles {:dev {:dependencies [[binaryage/devtools "0.9.9"]
-                                  [figwheel-sidecar "0.5.16"]
+  :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.16"]
                                   [cider/piggieback "0.3.1"]]
                    ;; need to add dev source path here to get user.clj loaded
                    :source-paths ["src" "dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
-                   ;; need to add the compliled assets to the :clean-targets
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                      :target-path]}
 
@@ -93,6 +83,5 @@
                        :cljsbuild {:builds [{:source-paths ["src"]
                                              :compiler {:output-to "resources/public/js/compiled/orghub.js"
                                                         :optimizations :advanced
-                                                        :jar true
                                                         :main orghub.core
                                                         :pretty-print false}}]}}})

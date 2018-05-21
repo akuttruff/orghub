@@ -6,7 +6,7 @@ A community organizing tool for managing contacts, sending alerts, publishing ev
 
 * install jdk (version 8 recommended)
 * install [leiningen](https://leiningen.org/)
-* start server and navigate to [localhost:3449](http://localhost:3449/).
+* start server and navigate to [localhost:3449](http://localhost:3000/).
   - `lein figwheel`
 
 ## TODOs
