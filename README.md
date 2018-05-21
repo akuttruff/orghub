@@ -19,6 +19,4 @@ A community organizing tool for managing contacts, sending alerts, publishing ev
 
 Copyright © 2018 Christopher Kuttruff
 
-The source code for this project (all code existing within the `src/` subdirectory) is licensed under GPLv3 (see LICENSE.txt)
-  * https://www.gnu.org/licenses/gpl-3.0.en.html
-All other dependencies and linked libraries are under their respective licenses
+The source code for this project (all code existing within the `src/` and `migrations/` subdirectories) is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) (see LICENSE.txt).  All other dependencies and linked libraries are under their respective licenses
