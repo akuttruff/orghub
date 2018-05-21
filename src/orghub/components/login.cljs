@@ -9,11 +9,11 @@
 (defonce login-info (r/atom {:email "" :password ""}))
 
 (defn login [email pw]
-
   (go (let [resp (<! (http/post "/login"
                                 {:json-params {:email email :password pw}
-                                 :headers {"X-CSRF-Token"   (http/get "/csrf")}}))]
-        resp)))
+                                 :headers {"X-CSRF-Token"
+                                           (:body (<! (http/get "/csrf")))}}))]
+        (prn (:body resp)))))
 
 
 (defn input [name val]
