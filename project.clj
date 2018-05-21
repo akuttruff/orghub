@@ -1,9 +1,8 @@
-(defproject orghub "0.1.0-SNAPSHOT"
-  :description "FIXME: write this!"
-  :url "http://example.com/FIXME"
+(defproject orghub "0.1.0"
+  :description "OrgHub: a communications tool for community organizers"
+  :url "orghub.co"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-
   :min-lein-version "2.7.1"
 
   :dependencies [[org.clojure/clojure "1.9.0"]
@@ -42,7 +41,7 @@
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
                 :figwheel {:on-jsload "orghub.core/on-js-reload"
-                           :open-urls ["http://localhost:3000"]}
+                           :open-urls ["http://localhost:3449"]}
 
                 :compiler {:main orghub.core
                            :asset-path "js/compiled/out"
@@ -57,7 +56,6 @@
          :reload-paths ["src/" "resources/"]}
   :source-paths ["src"]
   :resource-paths ["resources"]
-
   :uberjar-name "orghub.jar"
   :main orghub.server
   :aot [orghub.server]
@@ -65,7 +63,7 @@
 
   :figwheel {:css-dirs ["resources/public/css"] ;; watch and update CSS
              :ring-handler orghub.server/app
-             :server-port 3000
+             :server-port 3449
              ;; :server-logfile "tmp/figwheel.log"
              :server-logfile false}
 
