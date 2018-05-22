@@ -10,8 +10,10 @@
 
 (defn login [email pw]
   (go (let [resp (<! (http/post "/login"
-                                {:json-params {:email email :password pw}}))]
-        (prn resp))))
+                                {:json-params {:email email :password pw}
+                                 :headers {"X-CSRF-Token"
+                                           (:body (<! (http/get "/csrf")))}}))]
+        (prn (:body resp)))))
 
 
 (defn input [name val]

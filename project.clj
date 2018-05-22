@@ -14,6 +14,7 @@
                  ;; ring / compojure / support libs
                  [ring "1.6.3"]
                  [ring/ring-core "1.6.3"]
+                 [ring/ring-anti-forgery "1.2.0"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-jetty-adapter "1.6.3"]
                  [compojure "1.6.1"]

@@ -6,7 +6,9 @@
             [compojure.route :as route]
             [orghub.db :as db]
             [ring.adapter.jetty :refer [run-jetty]]
-            [ring.util.response :as resp]))
+            [ring.util.response :as resp]
+            [ring.middleware.anti-forgery :refer :all]
+            [ring.middleware.session :refer [wrap-session]]))
 
 (defn json-resp [data]
   {"Content-Type" "application/json; charset=utf-8"
@@ -26,18 +28,27 @@
     (println (str "User legit?: " valid?))
     (json-resp {:authenticated valid?})))
 
-(defroutes app
+(defroutes app-routes
   (GET "/" []
        (resp/content-type
         (resp/resource-response "index.html" {:root "public"})
         "text/html"))
 
   (POST "/login" req
+        (println "loggin in....")
+        (println req)
         (let [login-info (json-body req)]
           (login login-info)))
 
+  (GET "/csrf" []
+       (resp/response *anti-forgery-token*))
+
   (route/resources "/")
   (route/not-found "Page not found"))
+
+(def app (-> app-routes
+             wrap-anti-forgery
+             wrap-session))
 
 (defn -main [& args]
   (run-jetty app {:port 3000}))
