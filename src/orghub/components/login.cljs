@@ -6,15 +6,16 @@
 
 (enable-console-print!)
 
-(defonce login-info (r/atom {:email "" :password ""}))
+(defonce login-info (r/atom {:email "" :password "" :authenticated? false}))
 
 (defn login [email pw]
   (go (let [resp (<! (http/post "/login"
                                 {:json-params {:email email :password pw}
                                  :headers {"X-CSRF-Token"
-                                           (:body (<! (http/get "/csrf")))}}))]
-        (prn (:body resp)))))
-
+                                           (:body (<! (http/get "/csrf")))}}))
+            authd? (= "true" (:body resp))]
+        (println authd?)
+        (swap! login-info assoc :authenticated? authd?))))
 
 (defn input [name val]
   (let [type (or (#{"email" "password"} name) "text")

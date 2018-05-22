@@ -65,8 +65,7 @@
   :figwheel {:css-dirs ["resources/public/css"] ;; watch and update CSS
              :ring-handler orghub.server/app
              :server-port 3449
-             ;; :server-logfile "tmp/figwheel.log"
-             :server-logfile false}
+             :server-logfile "figwheel_server.log"}
 
   :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.16"]
                                   [cider/piggieback "0.3.1"]]

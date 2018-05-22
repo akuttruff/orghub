@@ -21,7 +21,7 @@
    [:a#menuLink.menu-link {:href "#menu"}]
    [:div#menu
     [:div.pure-menu
-     [:a.pure-menu-heading {:href "/"}
+     [:a.pure-menu-heading {:href "#/"}
       "OrgHub"]
      [:ul.pure-menu-list
       [pure-link "Home"   "#/"]

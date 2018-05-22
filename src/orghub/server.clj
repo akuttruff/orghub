@@ -10,41 +10,28 @@
             [ring.middleware.anti-forgery :refer :all]
             [ring.middleware.session :refer [wrap-session]]))
 
-(defn json-resp [data]
-  {"Content-Type" "application/json; charset=utf-8"
-   :status 200
-   :body (generate-string data)})
-
 (defn json-body [req]
   (parse-string (slurp (:body req)) true))
 
 (defn login [login-info]
   (let [email  (:email login-info)
         pw     (:password login-info)
-        user   (db/find-by :users :email email)
-        valid? (hashers/check pw (:password_digest user))]
-
-    ;; TODO: stick authenticated flag into session
-    (println (str "User legit?: " valid?))
-    (json-resp {:authenticated valid?})))
+        user   (db/find-by :users :email email)]
+    ;; check that user-provided password matches digest in db
+    (hashers/check pw (:password_digest user))))
 
 (defroutes app-routes
-  (GET "/" []
-       (resp/content-type
-        (resp/resource-response "index.html" {:root "public"})
-        "text/html"))
-
   (POST "/login" req
-        (println "loggin in....")
-        (println req)
-        (let [login-info (json-body req)]
-          (login login-info)))
+        (let [session (:session req {})
+              authenticated? (login (json-body req))]
+          (-> (resp/response (str authenticated?))
+              (assoc-in [:session :authenticated?] authenticated?))))
 
   (GET "/csrf" []
        (resp/response *anti-forgery-token*))
 
-  (route/resources "/")
-  (route/not-found "Page not found"))
+  (route/not-found "Page not found")
+  (route/resources "/"))
 
 (def app (-> app-routes
              wrap-anti-forgery
