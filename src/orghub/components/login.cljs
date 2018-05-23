@@ -8,14 +8,14 @@
 
 (defonce login-info (r/atom {:email "" :password "" :authenticated? false}))
 
-(defn login [email pw]
-  (go (let [resp (<! (http/post "/login"
-                                {:json-params {:email email :password pw}
-                                 :headers {"X-CSRF-Token"
-                                           (:body (<! (http/get "/csrf")))}}))
+(defn login [email pw app-state]
+  (go (let [csrf (:body (<! (http/get "/csrf")))
+            opts {:json-params {:email email :password pw}
+                  :headers {"X-CSRF-Token" csrf}}
+            resp (<! (http/post "/login" opts))
             authd? (= "true" (:body resp))]
-        (prn (str "authd: " authd?))
-        (swap! login-info assoc :authenticated? authd?))))
+        (if authd?
+          (swap! app-state assoc :logged-in? authd?)))))
 
 (defn input [name val]
   (let [type (or (#{"email" "password"} name) "text")
@@ -27,12 +27,12 @@
        :value @val
        :on-change #(reset! val (-> % .-target .-value))}]]))
 
-(defn form []
+(defn content [app-state]
   (let [email (r/atom "")
         password (r/atom "")]
     [:form.pure-form
      [input "email" email]
      [input "password" password]
      [:button.pure-button.pure-input-1.pure-button-primary
-      {:on-click (fn [_] (login @email @password))}
+      {:on-click (fn [_] (login @email @password app-state))}
       "Log In"]]))

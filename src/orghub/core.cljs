@@ -2,7 +2,7 @@
   (:require [reagent.core :as r]
             [secretary.core :as secretary :refer-macros [defroute]]
             [orghub.components.home :as home]
-            [orghub.components.home :as groups]
+            [orghub.components.groups :as groups]
             [orghub.components.navigation :as nav]))
 
 (def app-state (r/atom {}))
@@ -19,7 +19,7 @@
   (nav/hook-browser-navigation!))
 
 (defmulti current-page #(:page @app-state))
-(defmethod current-page :home []    [home/content])
+(defmethod current-page :home []    [home/content app-state])
 (defmethod current-page :groups []  [groups/content])
 (defmethod current-page :default [] [:div ])
 
