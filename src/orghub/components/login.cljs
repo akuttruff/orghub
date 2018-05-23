@@ -14,7 +14,7 @@
                                  :headers {"X-CSRF-Token"
                                            (:body (<! (http/get "/csrf")))}}))
             authd? (= "true" (:body resp))]
-        (println authd?)
+        (prn (str "authd: " authd?))
         (swap! login-info assoc :authenticated? authd?))))
 
 (defn input [name val]
